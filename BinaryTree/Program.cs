@@ -25,3 +25,13 @@ Console.WriteLine();
 helper.PostOrder2(tree);
 Console.WriteLine();
 helper.PostOrder3(tree);
+Console.WriteLine();
+
+// Get height of a binary tree
+Console.WriteLine(helper.GetTreeHeight(tree));
+
+// Check if the tree is balanced
+Console.WriteLine(helper.CheckBalancedTree(tree));
+
+// Calculate the diameter of a binary tree
+Console.WriteLine(helper.GetTreeDiameter(tree));

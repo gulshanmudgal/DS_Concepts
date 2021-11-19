@@ -40,6 +40,7 @@ namespace BinaryTree
             return rootNode;
         }
 
+        #region Tree Traversal Algorithms
         /// <summary>
         /// Recursive InOrder Traversal
         /// Left -> Root -> Right
@@ -249,5 +250,85 @@ namespace BinaryTree
                 Console.Write(item + "\t");
             }
         }
+        #endregion
+
+        #region Tree Algorithms
+
+        /// <summary>
+        /// Functions returns the height of any binary tree.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public int GetTreeHeight(Node root)
+        {
+            if(root == null)
+                return 0;
+
+            return 1 + Math.Max(GetTreeHeight(root.left), GetTreeHeight(root.right));
+        }
+
+        /// <summary>
+        /// Check if the tree is Balanced.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns>
+        /// If the tree is unbalanced -> -1 
+        /// If the tree is balanced -> height of the tree
+        /// </returns>
+        public int CheckBalancedTree(Node root)
+        {
+            if(root == null)
+            {
+                return 0;
+            }
+
+            int leftHeight = CheckBalancedTree(root.left);
+            if (leftHeight == -1)
+            {
+                return -1;
+            }
+
+            int rightHeight = CheckBalancedTree(root.right);
+            if (rightHeight == -1)
+            {
+                return -1;
+            }
+
+            if(Math.Abs(leftHeight - rightHeight) > 1)
+            {
+                return -1;
+            }
+
+            return Math.Max(leftHeight, rightHeight) + 1;
+        }
+
+        /// <summary>
+        /// Calculates the Diameter of any binary tree
+        /// Diameter of a tree is the maximum distance between two nodes, the path to those two nodes may or man not pass through the root node.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns>return the diameter of the tree</returns>
+        public int GetTreeDiameter(Node root)
+        {
+            int diameter = 0;
+
+            GetHeight(root, ref diameter);
+
+            return diameter;
+        }
+
+        private int GetHeight(Node root, ref int diameter)
+        {
+            if (root == null)
+                return 0;
+
+            int lh = GetHeight(root.left, ref diameter);
+            int rh = GetHeight(root.right, ref diameter);
+
+            diameter = Math.Max((lh + rh), diameter);
+
+            return Math.Max(lh, rh) + 1;
+        }
+        #endregion
     }
 }
