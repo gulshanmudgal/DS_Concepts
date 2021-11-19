@@ -250,6 +250,44 @@ namespace BinaryTree
                 Console.Write(item + "\t");
             }
         }
+
+        /// <summary>
+        /// Prints the binary tree level by level.
+        /// </summary>
+        /// <param name="root"></param>
+        public void PrintLevelOrder(Node root)
+        {
+            if (root == null)
+                return;
+
+            Queue<Node> nodeQueue = new Queue<Node>();
+
+            nodeQueue.Enqueue(root);
+
+            while (nodeQueue.Count > 0)
+            {
+                int queueCount = nodeQueue.Count;
+
+                for (int i = 0; i < queueCount; i++)
+                {
+                    Node currentNode = nodeQueue.Dequeue();
+
+                    Console.Write(currentNode.value + "\t");
+
+                    if(currentNode.left != null)
+                    {
+                        nodeQueue.Enqueue(currentNode.left);
+                    }
+
+                    if (currentNode.right != null)
+                    {
+                        nodeQueue.Enqueue(currentNode.right);
+                    }
+                }
+
+                Console.WriteLine();
+            }
+        }
         #endregion
 
         #region Tree Algorithms
