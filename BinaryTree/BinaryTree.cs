@@ -367,6 +367,16 @@ namespace BinaryTree
 
             return Math.Max(lh, rh) + 1;
         }
+
+        public bool IsSameTree(Node tree1Root, Node tree2Root)
+        {
+            if(tree1Root == null || tree2Root == null)
+            {
+                return tree1Root == tree2Root;
+            }
+
+            return (tree1Root.value == tree2Root.value) && IsSameTree(tree1Root.left, tree2Root.left) && IsSameTree(tree1Root.right, tree2Root.right);
+        }
         #endregion
     }
 }
