@@ -341,7 +341,7 @@ namespace BinaryTree
         }
 
         /// <summary>
-        /// Calculates the Diameter of any binary tree
+        /// Calculates the Diameter of any binary tree,
         /// Diameter of a tree is the maximum distance between two nodes, the path to those two nodes may or man not pass through the root node.
         /// </summary>
         /// <param name="root"></param>
@@ -368,7 +368,7 @@ namespace BinaryTree
             return Math.Max(lh, rh) + 1;
         }
 
-        public bool IsSameTree(Node tree1Root, Node tree2Root)
+        public bool IsSameTree(Node? tree1Root, Node? tree2Root)
         {
             if(tree1Root == null || tree2Root == null)
             {
@@ -376,6 +376,25 @@ namespace BinaryTree
             }
 
             return (tree1Root.value == tree2Root.value) && IsSameTree(tree1Root.left, tree2Root.left) && IsSameTree(tree1Root.right, tree2Root.right);
+        }
+
+        /// <summary>
+        /// The function calculates the maximum path between any two nodes for a given tree.
+        /// </summary>
+        /// <returns></returns>
+        public int GetMaxPathSum(Node? root, ref int maxVal)
+        {
+            if(root == null)
+            {
+                return 0;
+            }
+
+            int leftSum = GetMaxPathSum(root.left, ref maxVal);
+            int rightSum = GetMaxPathSum(root.right, ref maxVal);
+
+            maxVal = Math.Max(maxVal, (root.value + leftSum + rightSum));
+
+            return root.value + Math.Max(leftSum, rightSum);
         }
         #endregion
     }

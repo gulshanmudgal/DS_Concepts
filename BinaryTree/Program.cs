@@ -43,3 +43,11 @@ Console.WriteLine(helper.CheckBalancedTree(tree)  == 1 ? false : true);
 
 // Calculate the diameter of a binary tree
 Console.WriteLine(helper.GetTreeDiameter(tree));
+
+// Check if two tree are same(value wise)
+Console.WriteLine(helper.IsSameTree(tree, null));
+
+// Print Max Path sum for a given tree
+int maxPathSum = 0;
+helper.GetMaxPathSum(tree, ref maxPathSum);
+Console.WriteLine(maxPathSum);
