@@ -48,6 +48,6 @@ Console.WriteLine(helper.GetTreeDiameter(tree));
 Console.WriteLine(helper.IsSameTree(tree, null));
 
 // Print Max Path sum for a given tree
-int maxPathSum = 0;
+int maxPathSum = Int32.MinValue;
 helper.GetMaxPathSum(tree, ref maxPathSum);
 Console.WriteLine(maxPathSum);

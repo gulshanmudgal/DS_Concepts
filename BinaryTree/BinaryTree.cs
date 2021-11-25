@@ -389,8 +389,8 @@ namespace BinaryTree
                 return 0;
             }
 
-            int leftSum = GetMaxPathSum(root.left, ref maxVal);
-            int rightSum = GetMaxPathSum(root.right, ref maxVal);
+            int leftSum = Math.Max(0, GetMaxPathSum(root.left, ref maxVal));
+            int rightSum = Math.Max(0, GetMaxPathSum(root.right, ref maxVal));
 
             maxVal = Math.Max(maxVal, (root.value + leftSum + rightSum));
 
