@@ -394,12 +394,6 @@ namespace BinaryTree
 
             maxVal = Math.Max(maxVal, (root.value + leftSum + rightSum));
 
-            if(leftSum < 0)
-                leftSum = 0;
-
-            if(rightSum < 0)
-                rightSum = 0;
-
             return root.value + Math.Max(leftSum, rightSum);
         }
         #endregion
