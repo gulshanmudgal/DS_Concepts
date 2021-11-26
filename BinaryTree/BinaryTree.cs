@@ -397,5 +397,107 @@ namespace BinaryTree
             return root.value + Math.Max(leftSum, rightSum);
         }
         #endregion
+
+        #region Boundary Traversals
+        private void PrintList(List<int> listToPrint)
+        {
+            foreach(int item in listToPrint)
+            {
+                Console.Write(item + "\t");
+            }
+        }
+
+        private bool IsLeaf(Node root)
+        {
+            return (root.left == null) && (root.right == null);
+        }
+
+        private void AddLeftBoundary(Node root, List<int> res)
+        {
+            Node? cur = root.left;
+
+            while (cur != null)
+            {
+                if (IsLeaf(cur) == false)
+                {
+                    res.Add(cur.value);
+                }
+                    
+                if (cur.left != null)
+                {
+                    cur = cur.left;
+                }
+                else
+                {
+                    cur = cur.right;
+                }
+            }
+        }
+
+        private void AddRightBoundary(Node root, List<int> res)
+        {
+            Node? currentNode = root.right;
+
+            while (currentNode != null)
+            {
+                if(IsLeaf(currentNode) == false)
+                {
+                    res.Add(currentNode.value);
+                }
+
+                if(currentNode.right != null)
+                {
+                    currentNode = currentNode.right;
+                }
+                else
+                {
+                    currentNode = currentNode.left;
+                }
+            }
+        }
+
+        private void AddLeaves(Node root, List<int> res)
+        {
+            if(IsLeaf(root))
+            {
+                res.Add(root.value);
+                return;
+            }
+
+            if(root.left != null)
+            {
+                AddLeaves(root.left, res);
+            }
+
+            if (root.right != null)
+            {
+                AddLeaves(root.right, res);
+            }
+        }
+
+        public void PrintBoundary(Node root)
+        {
+            if(root == null)
+            {
+                return;
+            }
+
+            List<int> boundaryValues = new List<int>();
+            boundaryValues.Add(root.value);
+
+            if(IsLeaf(root))
+            {
+                PrintList(boundaryValues);
+                return;
+            }
+
+            AddLeftBoundary(root, boundaryValues);
+            AddLeaves(root, boundaryValues);
+            AddRightBoundary(root, boundaryValues);
+
+            PrintList(boundaryValues);
+        }
+
+        #endregion
     }
 }

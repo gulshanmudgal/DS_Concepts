@@ -51,3 +51,6 @@ Console.WriteLine(helper.IsSameTree(tree, null));
 int maxPathSum = Int32.MinValue;
 helper.GetMaxPathSum(tree, ref maxPathSum);
 Console.WriteLine(maxPathSum);
+
+// Print Tree Boundary nodes
+helper.PrintBoundary(tree);
