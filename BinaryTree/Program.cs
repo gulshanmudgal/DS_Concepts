@@ -54,3 +54,44 @@ Console.WriteLine(maxPathSum);
 
 // Print Tree Boundary nodes
 helper.PrintBoundary(tree);
+
+// Vertical tree traversal
+var nodes = helper.VerticalTraversal2(tree);
+Console.WriteLine(); Console.WriteLine();
+if(nodes != null)
+{
+    foreach (var level in nodes)
+    {
+        foreach (var node in level)
+        {
+            Console.Write(node + "\t");
+        }
+
+        Console.WriteLine();
+    }
+}
+
+Console.WriteLine(); Console.WriteLine();
+
+// Printing Top View of the tree
+var topView = helper.GetTopView(tree);
+Console.WriteLine("Printing Top View");
+if(topView != null)
+{
+    foreach (var item in topView)
+    {
+        Console.Write(item.Value + "\t");
+    }
+}
+
+Console.WriteLine(); Console.WriteLine();
+// Printing Top View of the tree
+var bottomView = helper.GetBottomView(tree);
+Console.WriteLine("Printing Top View");
+if (bottomView != null)
+{
+    foreach (var item in bottomView)
+    {
+        Console.Write(item.Value + "\t");
+    }
+}
