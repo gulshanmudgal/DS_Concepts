@@ -54,4 +54,43 @@ namespace Graph
             AdjacencyList[source].Add(destination);
         }
     }
+
+    internal static class GraphExtensions<T>
+    {
+        public static List<T> BFSOfGraph(Dictionary<T, HashSet<T>> AdjacencyList, T start)
+        {
+            HashSet<T> visited = new HashSet<T>();
+
+            if (!AdjacencyList.ContainsKey(start))
+            {
+                return visited.ToList();
+            }
+
+            foreach (var item in AdjacencyList)
+            {
+                if(!visited.Contains(item.Key))
+                {
+                    Queue<T> neighborVertexQueue = new Queue<T>();
+                    neighborVertexQueue.Enqueue(item.Key);
+
+                    while (neighborVertexQueue.Count > 0)
+                    {
+                        var vertexToProcess = neighborVertexQueue.Dequeue();
+
+                        if (!visited.Contains(vertexToProcess))
+                        {
+                            visited.Add(vertexToProcess);
+
+                            foreach (var vertex in AdjacencyList[vertexToProcess])
+                            {
+                                neighborVertexQueue.Enqueue(vertex);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return visited.ToList();
+        }
+    }
 }
