@@ -19,3 +19,12 @@ foreach (var item in bfs)
 {
     Console.Write(item + "\t");
 }
+Console.WriteLine();
+Console.WriteLine();
+
+var dfs = GraphExtensions<int>.DFSOfGraph(adjacencyList);
+
+foreach (var item in dfs)
+{
+    Console.Write(item + "\t");
+}

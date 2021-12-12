@@ -92,5 +92,30 @@ namespace Graph
 
             return visited.ToList();
         }
+
+        public static List<T> DFSOfGraph(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            HashSet<T> visited = new HashSet<T>();
+
+            foreach(var keyValPair in AdjacencyList)
+            {
+                DFS(AdjacencyList, visited, keyValPair.Key);
+            }
+
+            return visited.ToList();
+        }
+
+        private static void DFS(Dictionary<T, HashSet<T>> AdjacencyList, HashSet<T> visited, T node)
+        {
+            if(!visited.Contains(node))
+            {
+                visited.Add(node);
+
+                foreach(var item in AdjacencyList[node])
+                {
+                    DFS(AdjacencyList, visited, item);
+                }
+            }
+        }
     }
 }
