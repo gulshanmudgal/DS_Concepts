@@ -28,3 +28,5 @@ foreach (var item in dfs)
 {
     Console.Write(item + "\t");
 }
+Console.WriteLine();
+Console.WriteLine("Graph contains cycles : " +GraphExtensions<int>.IsCyclic(adjacencyList));

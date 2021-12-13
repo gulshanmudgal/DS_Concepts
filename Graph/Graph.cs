@@ -117,5 +117,53 @@ namespace Graph
                 }
             }
         }
+
+        public static bool IsCyclic(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            HashSet<T> visitedNodes = new HashSet<T>();
+
+            foreach (var vertex in AdjacencyList)
+            {
+                if(!visitedNodes.Contains(vertex.Key))
+                {
+                    if(DetectCycle(AdjacencyList, vertex.Key, default(T), visitedNodes))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Detects cycle in a graph using DFS algorithm.
+        /// </summary>
+        /// <returns></returns>
+        private static bool DetectCycle(Dictionary<T, HashSet<T>> AdjacencyList, T startVertex, T parentVertex, HashSet<T> visitedNodes)
+        {
+            visitedNodes.Add(startVertex);
+
+            foreach(var neighbor in AdjacencyList[startVertex])
+            {
+                if(!visitedNodes.Contains(neighbor))
+                {
+                    if (DetectCycle(AdjacencyList, neighbor, startVertex, visitedNodes))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if(!neighbor.Equals(parentVertex))
+                    {
+                        return true;
+                    }
+                }
+                
+            }
+
+            return false;
+        }
     }
 }
