@@ -246,5 +246,58 @@ namespace Graph
 
             return true;
         }
+
+        public static bool CheckIsGraphBiPartite(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+
+            bool isBipartite = true;
+            Dictionary<T, int> coloredVertexSet = new Dictionary<T, int>();
+
+            foreach (var vertex in AdjacencyList)
+            {
+                if (!coloredVertexSet.ContainsKey(vertex.Key))
+                {
+                    if (!BiPartiteCheckDFS(AdjacencyList, vertex.Key, coloredVertexSet))
+                    {
+                        isBipartite = false;
+                        return isBipartite;
+                    }
+                }
+            }
+
+            return isBipartite;
+        }
+
+        private static bool BiPartiteCheckDFS(Dictionary<T, HashSet<T>> AdjacencyList, T start, Dictionary<T, int> coloredVertexSet)
+        {
+            if(!coloredVertexSet.ContainsKey(start))
+            {
+                coloredVertexSet.Add(start, 1);
+            }
+
+            int colorToSet = 1 - coloredVertexSet[start];
+
+            foreach (var neighborVertex in AdjacencyList[start])
+            {
+                if(!coloredVertexSet.ContainsKey(neighborVertex))
+                {
+                    coloredVertexSet[neighborVertex] = colorToSet;
+
+                    if (!BiPartiteCheckDFS(AdjacencyList, neighborVertex, coloredVertexSet))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if(colorToSet != coloredVertexSet[neighborVertex])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }

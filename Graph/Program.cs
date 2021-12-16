@@ -5,7 +5,7 @@ Console.WriteLine("Hello, World!");
 
 Dictionary<int, HashSet<int>> adjacencyList = new Dictionary<int, HashSet<int>>();
 
-adjacencyList.Add(1, new HashSet<int>() { 2, 3, 6});
+adjacencyList.Add(1, new HashSet<int>() { 2, 3, 6 });
 adjacencyList.Add(2, new HashSet<int>() { 1, 5, 6 });
 adjacencyList.Add(3, new HashSet<int>() { 1, 6 });
 adjacencyList.Add(4, new HashSet<int>() { 7 });
@@ -42,3 +42,4 @@ Console.WriteLine("Graph contains cycles : " + GraphExtensions<int>.IsCyclicDFS(
 
 Console.WriteLine();
 Console.WriteLine(GraphExtensions<int>.CheckBiPartite(adjacencyList));
+Console.WriteLine(GraphExtensions<int>.CheckIsGraphBiPartite(adjacencyList));
