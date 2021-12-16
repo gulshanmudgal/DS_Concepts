@@ -118,7 +118,12 @@ namespace Graph
             }
         }
 
-        public static bool IsCyclic(Dictionary<T, HashSet<T>> AdjacencyList)
+        /// <summary>
+        /// Driver code for Cycle Detection using DFS Algorithm.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <returns></returns>
+        public static bool IsCyclicDFS(Dictionary<T, HashSet<T>> AdjacencyList)
         {
             HashSet<T> visitedNodes = new HashSet<T>();
 
@@ -164,6 +169,82 @@ namespace Graph
             }
 
             return false;
+        }
+
+        public static bool IsCyclicBFS(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            HashSet<T> visitedNodes = new HashSet<T>();
+
+            foreach (var vertex in AdjacencyList)
+            {
+                if(!visitedNodes.Contains(vertex.Key))
+                {
+                    if (DetectCycle(vertex.Key, default(T), visitedNodes, AdjacencyList))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static bool DetectCycle(T startVertex, T parentVertex, HashSet<T> visitedNodes, Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            Queue<(T node, T parent)> neighborVertexQueue = new Queue<(T node, T parentNode)>();
+            neighborVertexQueue.Enqueue((startVertex, parentVertex));
+
+
+            return false;
+        }
+    
+        public static bool CheckBiPartite(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            bool isBipartite = true;
+            Dictionary<T, int> coloredVertexSet = new Dictionary<T, int>();
+
+            foreach (var vertex in AdjacencyList)
+            {
+                if(!coloredVertexSet.ContainsKey(vertex.Key))
+                {
+                    if(!BiPartiteCheckBFS(AdjacencyList, vertex.Key, coloredVertexSet))
+                    {
+                        isBipartite = false;
+                        return isBipartite;
+                    }
+                }
+            }
+
+            return isBipartite;
+        }
+
+        private static bool BiPartiteCheckBFS(Dictionary<T, HashSet<T>> AdjacencyList, T start, Dictionary<T, int> coloredVertexSet)
+        {
+            Queue<T> neighborVetexQueue = new Queue<T>();
+
+            neighborVetexQueue.Enqueue(start);
+            coloredVertexSet.Add(start, 1);
+
+            while (neighborVetexQueue.Count > 0)
+            {
+                var vertexKey = neighborVetexQueue.Dequeue();
+                var colorToSet = 1 - coloredVertexSet[vertexKey];
+
+                foreach (var neighborVertex in AdjacencyList[vertexKey])
+                {
+                    if (!coloredVertexSet.ContainsKey(neighborVertex))
+                    {
+                        coloredVertexSet.Add(neighborVertex, colorToSet);
+                        neighborVetexQueue.Enqueue(neighborVertex);
+                    }
+                    else if (colorToSet != coloredVertexSet[neighborVertex])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -29,4 +29,16 @@ foreach (var item in dfs)
     Console.Write(item + "\t");
 }
 Console.WriteLine();
-Console.WriteLine("Graph contains cycles : " +GraphExtensions<int>.IsCyclic(adjacencyList));
+
+
+Dictionary<int, HashSet<int>> adjacencyList2 = new Dictionary<int, HashSet<int>>();
+adjacencyList2.Add(1, new HashSet<int>() { 2, 5 });
+adjacencyList2.Add(2, new HashSet<int>() { 1, 2 });
+adjacencyList2.Add(3, new HashSet<int>() { 2, 4 });
+adjacencyList2.Add(4, new HashSet<int>() { 3, 5 });
+adjacencyList2.Add(5, new HashSet<int>() { 1, 4 });
+
+Console.WriteLine("Graph contains cycles : " + GraphExtensions<int>.IsCyclicDFS(adjacencyList2));
+
+Console.WriteLine();
+Console.WriteLine(GraphExtensions<int>.CheckBiPartite(adjacencyList));
