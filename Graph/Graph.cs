@@ -197,7 +197,12 @@ namespace Graph
 
             return false;
         }
-    
+
+        /// <summary>
+        /// Driver code to detect if a tree is bipartite or not.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <returns></returns>
         public static bool CheckBiPartite(Dictionary<T, HashSet<T>> AdjacencyList)
         {
             bool isBipartite = true;
@@ -218,6 +223,13 @@ namespace Graph
             return isBipartite;
         }
 
+        /// <summary>
+        /// In a given graph component, it checks if the graph component is bipartite or not.(Using BFS)
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <param name="start"></param>
+        /// <param name="coloredVertexSet"></param>
+        /// <returns></returns>
         private static bool BiPartiteCheckBFS(Dictionary<T, HashSet<T>> AdjacencyList, T start, Dictionary<T, int> coloredVertexSet)
         {
             Queue<T> neighborVetexQueue = new Queue<T>();
@@ -247,6 +259,11 @@ namespace Graph
             return true;
         }
 
+        /// <summary>
+        /// Driver code to detect if a tree is bipartite or not.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <returns></returns>
         public static bool CheckIsGraphBiPartite(Dictionary<T, HashSet<T>> AdjacencyList)
         {
 
@@ -268,6 +285,13 @@ namespace Graph
             return isBipartite;
         }
 
+        /// <summary>
+        /// In a given graph component, it checks if the graph component is bipartite or not.(Using DFS)
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <param name="start"></param>
+        /// <param name="coloredVertexSet"></param>
+        /// <returns></returns>
         private static bool BiPartiteCheckDFS(Dictionary<T, HashSet<T>> AdjacencyList, T start, Dictionary<T, int> coloredVertexSet)
         {
             if(!coloredVertexSet.ContainsKey(start))
@@ -298,6 +322,54 @@ namespace Graph
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Function to check if they directed graph contains any cycles.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <returns></returns>
+        public static bool IsCyclic(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            HashSet<T> visited = new HashSet<T>();
+            HashSet<T> dfsVisited = new HashSet<T>();
+
+            foreach (var vertex in AdjacencyList)
+            {
+                if(!visited.Contains(vertex.Key))
+                {
+                    if(CheckCycle(AdjacencyList, visited, dfsVisited, vertex.Key))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static bool CheckCycle(Dictionary<T, HashSet<T>> AdjacencyList, HashSet<T> visited, HashSet<T> dfsVisited, T node)
+        {
+            visited.Add(node);
+            dfsVisited.Add(node);
+
+            foreach (var neighbor in AdjacencyList[node])
+            {
+                if(!visited.Contains(neighbor))
+                {
+                    if (CheckCycle(AdjacencyList, visited, dfsVisited, neighbor))
+                    {
+                        return true;
+                    }
+                }
+                else if(dfsVisited.Contains(neighbor))
+                {
+                    return true;
+                }
+            }
+
+            dfsVisited.Remove(node);
+            return false;
         }
     }
 }

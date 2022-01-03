@@ -43,3 +43,20 @@ Console.WriteLine("Graph contains cycles : " + GraphExtensions<int>.IsCyclicDFS(
 Console.WriteLine();
 Console.WriteLine(GraphExtensions<int>.CheckBiPartite(adjacencyList));
 Console.WriteLine(GraphExtensions<int>.CheckIsGraphBiPartite(adjacencyList));
+
+
+
+Dictionary<int, HashSet<int>> directedAdjacencyList = new Dictionary<int, HashSet<int>>();
+directedAdjacencyList.Add(1, new HashSet<int>() { 2 });
+directedAdjacencyList.Add(2, new HashSet<int>() { 3 });
+directedAdjacencyList.Add(3, new HashSet<int>() { 4, 6 });
+directedAdjacencyList.Add(4, new HashSet<int>() { 5 });
+directedAdjacencyList.Add(5, new HashSet<int>() { });
+directedAdjacencyList.Add(6, new HashSet<int>() { 5 });
+directedAdjacencyList.Add(7, new HashSet<int>() { 2, 8 });
+directedAdjacencyList.Add(8, new HashSet<int>() { 9 });
+directedAdjacencyList.Add(9, new HashSet<int>() { 7 });
+
+Console.WriteLine();
+Console.WriteLine("Does Graph has cycles: ");
+Console.WriteLine(GraphExtensions<int>.IsCyclic(directedAdjacencyList));
