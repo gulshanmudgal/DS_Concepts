@@ -371,5 +371,36 @@ namespace Graph
             dfsVisited.Remove(node);
             return false;
         }
+
+        public static List<T> GetTopoSort(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            Stack<T> topoStack = new Stack<T>();
+            HashSet<T> visited = new HashSet<T>();
+
+            foreach (var vertex in AdjacencyList)
+            {
+                if(!visited.Contains(vertex.Key))
+                {
+                    GetTopoSort(AdjacencyList, visited, topoStack, vertex.Key);
+                }
+            }
+
+            return topoStack.ToList();
+        }
+
+        private static void GetTopoSort(Dictionary<T, HashSet<T>> AdjacencyList, HashSet<T> visited, Stack<T> topoStack, T startNode)
+        {
+            visited.Add(startNode);
+
+            foreach(var neighbor in AdjacencyList[startNode])
+            {
+                if(!visited.Contains(neighbor))
+                {
+                    GetTopoSort(AdjacencyList, visited, topoStack, neighbor);
+                }
+            }
+
+            topoStack.Push(startNode);
+        }
     }
 }

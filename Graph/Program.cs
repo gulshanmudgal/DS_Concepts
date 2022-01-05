@@ -60,3 +60,21 @@ directedAdjacencyList.Add(9, new HashSet<int>() { 7 });
 Console.WriteLine();
 Console.WriteLine("Does Graph has cycles: ");
 Console.WriteLine(GraphExtensions<int>.IsCyclic(directedAdjacencyList));
+
+Dictionary<int, HashSet<int>> directedAcyclicAdjacencyList = new Dictionary<int, HashSet<int>>();
+directedAcyclicAdjacencyList.Add(0, new HashSet<int>() {  });
+directedAcyclicAdjacencyList.Add(1, new HashSet<int>() {  });
+directedAcyclicAdjacencyList.Add(2, new HashSet<int>() { 3 });
+directedAcyclicAdjacencyList.Add(3, new HashSet<int>() { 1 });
+directedAcyclicAdjacencyList.Add(4, new HashSet<int>() { 0, 1 });
+directedAcyclicAdjacencyList.Add(5, new HashSet<int>() { 0, 2 });
+
+Console.WriteLine();
+Console.WriteLine("Printing Topo sort");
+var topo = GraphExtensions<int>.GetTopoSort(directedAcyclicAdjacencyList);
+
+foreach (var item in topo)
+{
+    Console.Write(item + "\t");
+}
+
