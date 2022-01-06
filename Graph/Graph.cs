@@ -372,6 +372,11 @@ namespace Graph
             return false;
         }
 
+        /// <summary>
+        /// Topo Sort using DFS algorithm
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <returns></returns>
         public static List<T> GetTopoSort(Dictionary<T, HashSet<T>> AdjacencyList)
         {
             Stack<T> topoStack = new Stack<T>();
@@ -401,6 +406,75 @@ namespace Graph
             }
 
             topoStack.Push(startNode);
+        }
+
+        /// <summary>
+        /// Topo sort using BFS/ Kahn's Algorithm.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <returns></returns>
+        public static List<T> GetTopoSortBFS(Dictionary<T, HashSet<T>> AdjacencyList)
+        {
+            Dictionary<T, int> inDegree = new Dictionary<T, int>();
+            GetInDegree(AdjacencyList, inDegree);
+
+            Queue<T> topo = new Queue<T>();
+
+            foreach (var vertex in inDegree)
+            {
+                if(inDegree[vertex.Key] == 0)
+                {
+                    topo.Enqueue(vertex.Key);
+                }
+            }
+
+            List<T> topoSort = new List<T>();
+
+            while (topo.Count > 0)
+            {
+                var node = topo.Dequeue();
+                topoSort.Add(node);
+
+                foreach(var connection in AdjacencyList[node])
+                {
+                    inDegree[connection] = inDegree[connection] - 1;
+
+                    if(inDegree[connection] == 0)
+                    {
+                        topo.Enqueue(connection);
+                    }
+                }
+            }
+
+            return topoSort;
+        }
+
+        /// <summary>
+        /// Function to calculate in degree of a directed graph
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <param name="inDegree"></param>
+        private static void GetInDegree(Dictionary<T, HashSet<T>> AdjacencyList, Dictionary<T, int> inDegree)
+        {
+            foreach (var vertex in AdjacencyList)
+            {
+                inDegree[vertex.Key] = 0;
+            }
+
+            foreach (var vertex in AdjacencyList)
+            {
+                foreach (var node in AdjacencyList[vertex.Key])
+                {
+                    if (inDegree.ContainsKey(node))
+                    {
+                        inDegree[node] = inDegree[node] + 1;
+                    }
+                    else
+                    {
+                        inDegree[node] = 1;
+                    }
+                }
+            }
         }
     }
 }

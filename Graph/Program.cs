@@ -78,3 +78,11 @@ foreach (var item in topo)
     Console.Write(item + "\t");
 }
 
+Console.WriteLine();
+Console.WriteLine("Printing Topo sort");
+var topo2 = GraphExtensions<int>.GetTopoSortBFS(directedAcyclicAdjacencyList);
+foreach (var item in topo2)
+{
+    Console.Write(item + "\t");
+}
+
