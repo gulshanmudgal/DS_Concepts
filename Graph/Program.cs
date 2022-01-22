@@ -100,3 +100,10 @@ adj5.Add(8, new HashSet<int>() { 6, 7 });
 
 GraphExtensions<int>.GetShortestPath(adj5, 0);
 
+Dictionary<int, HashSet<(int node, int weight)>> adj6 = new Dictionary<int, HashSet<(int node, int weight)>>();
+adj6.Add(1, new HashSet<(int node, int weight)>() { (2, 2), (4, 1) });
+adj6.Add(2, new HashSet<(int node, int weight)>() { (1, 2), (3, 4), (5, 5) });
+adj6.Add(3, new HashSet<(int node, int weight)>() { (2, 4), (4, 3), (5, 1) });
+adj6.Add(4, new HashSet<(int node, int weight)>() { (1, 1), (3, 3) });
+adj6.Add(5, new HashSet<(int node, int weight)>() { (2, 5), (3, 1) });
+GraphExtensions<int>.GetShortestPathInWeightedGraph(adj6, 1);

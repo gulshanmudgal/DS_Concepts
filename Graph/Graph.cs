@@ -520,7 +520,7 @@ namespace Graph
         }
 
         /// <summary>
-        /// Returns an list with minimum weight to each node from source node.
+        /// Prints an list with minimum weight to each node from source node.
         /// </summary>
         /// <param name="AdjacencyList"></param>
         /// <param name="source"></param>
@@ -542,6 +542,42 @@ namespace Graph
                     {
                         distance[neighborVertex] = distance[node] + 1;
                         bfsQueue.Enqueue(neighborVertex);
+                    }
+                }
+            }
+
+            Console.WriteLine("Printing Distance of Nodes from Source");
+            foreach (var vertex in AdjacencyList)
+            {
+                Console.WriteLine($"Distance between {source} -> {vertex.Key} = {distance[vertex.Key]}");
+            }
+
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Dijakstra's Algo || Prints minimum distance between source and other vertices in a weighted graph.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <param name="source"></param>
+        public static void GetShortestPathInWeightedGraph(Dictionary<T, HashSet<(T node, int weight)>> AdjacencyList, T source)
+        {
+            PriorityQueue<T, int> priorityQueue = new PriorityQueue<T, int>();
+            Dictionary<T, int> distance = new Dictionary<T, int>();
+
+            priorityQueue.Enqueue(source, 0);
+            distance.Add(source, 0);
+
+            while (priorityQueue.Count > 0)
+            {
+                var node = priorityQueue.Dequeue();
+
+                foreach (var neighborVertex in AdjacencyList[node])
+                {
+                    if ((!distance.ContainsKey(neighborVertex.node)) || (distance.ContainsKey(neighborVertex.node) && distance[node] + neighborVertex.weight < distance[neighborVertex.node]))
+                    {
+                        distance[neighborVertex.node] = distance[node] + neighborVertex.weight;
+                        priorityQueue.Enqueue(neighborVertex.node, distance[node] + neighborVertex.weight);
                     }
                 }
             }
