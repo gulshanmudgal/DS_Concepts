@@ -55,6 +55,51 @@ namespace Graph
         }
     }
 
+    internal class WeightedGraph<T>
+    {
+        public Dictionary<T, HashSet<(T node, int weight)>> AdjacencyList { get; } = new Dictionary<T, HashSet<(T node, int weight)>>();
+
+        public WeightedGraph()
+        {
+        }
+
+        public WeightedGraph(IEnumerable<T> vertices, IEnumerable<(T source, T destination, int weight)> edges)
+        {
+            foreach (var vertex in vertices)
+            {
+                AddVertex(vertex);
+            }
+
+            foreach (var edge in edges)
+            {
+                AddEdge(edge.source, edge.destination, edge.weight);
+            }
+        }
+
+        /// <summary>
+        /// Method to add a vertex.
+        /// </summary>
+        /// <param name="vertexKey"></param>
+        private void AddVertex(T vertexKey)
+        {
+            if (!AdjacencyList.ContainsKey(vertexKey))
+            {
+                AdjacencyList[vertexKey] = new HashSet<(T node, int weight)>();
+            }
+        }
+
+        /// <summary>
+        /// Method to add an edge.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <param name="weight"></param>
+        private void AddEdge(T source, T destination, int weight)
+        {
+            AdjacencyList[source].Add((destination, weight));
+        }
+    }
+
     internal static class GraphExtensions<T>
     {
         public static List<T> BFSOfGraph(Dictionary<T, HashSet<T>> AdjacencyList, T start)
@@ -312,12 +357,9 @@ namespace Graph
                         return false;
                     }
                 }
-                else
+                else if (colorToSet != coloredVertexSet[neighborVertex])
                 {
-                    if(colorToSet != coloredVertexSet[neighborVertex])
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
@@ -475,6 +517,42 @@ namespace Graph
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns an list with minimum weight to each node from source node.
+        /// </summary>
+        /// <param name="AdjacencyList"></param>
+        /// <param name="source"></param>
+        public static void GetShortestPath(Dictionary<T, HashSet<T>> AdjacencyList, T source)
+        {
+            Dictionary<T, int> distance = new Dictionary<T, int>();
+            Queue<T> bfsQueue = new Queue<T> ();
+
+            distance.Add(source, 0);
+            bfsQueue.Enqueue(source);
+
+            while (bfsQueue.Count > 0)
+            {
+                T node = bfsQueue.Dequeue();
+
+                foreach (var neighborVertex in AdjacencyList[node])
+                {
+                    if((!distance.ContainsKey(neighborVertex)) || (distance.ContainsKey(neighborVertex) && distance[node] + 1 < distance[neighborVertex]))
+                    {
+                        distance[neighborVertex] = distance[node] + 1;
+                        bfsQueue.Enqueue(neighborVertex);
+                    }
+                }
+            }
+
+            Console.WriteLine("Printing Distance of Nodes from Source");
+            foreach (var vertex in AdjacencyList)
+            {
+                Console.WriteLine($"Distance between {source} -> {vertex.Key} = {distance[vertex.Key]}");
+            }
+
+            Console.WriteLine();
         }
     }
 }

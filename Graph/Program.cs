@@ -86,3 +86,17 @@ foreach (var item in topo2)
     Console.Write(item + "\t");
 }
 
+
+Dictionary<int, HashSet<int>> adj5 = new Dictionary<int, HashSet<int>>();
+adj5.Add(0, new HashSet<int>() { 1, 3 });
+adj5.Add(1, new HashSet<int>() { 0, 2 });
+adj5.Add(2, new HashSet<int>() { 1, 6 });
+adj5.Add(3, new HashSet<int>() { 0, 4 });
+adj5.Add(4, new HashSet<int>() { 3, 5 });
+adj5.Add(5, new HashSet<int>() { 4, 6 });
+adj5.Add(6, new HashSet<int>() { 2, 5, 7, 8 });
+adj5.Add(7, new HashSet<int>() { 6, 8 });
+adj5.Add(8, new HashSet<int>() { 6, 7 });
+
+GraphExtensions<int>.GetShortestPath(adj5, 0);
+
